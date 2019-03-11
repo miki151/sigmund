@@ -1,0 +1,40 @@
+
+export import "direction.znn";
+
+export struct Vec2 {
+  int x;
+  int y;
+};
+
+export Vec2(Direction dir) {
+  switch (dir) {
+    case (N) {
+      return Vec2(0, -1);
+    }
+    case (E) {
+      return Vec2(1, 0);
+    }
+    case (S) {
+      return Vec2(0, 1);
+    }
+    case (W) {
+      return Vec2(-1, 0);
+    }
+    case (NW) {
+      return Vec2(-1, -1);
+    }
+    case (NE) {
+      return Vec2(1, -1);
+    }
+    case (SW) {
+      return Vec2(-1, 1);
+    }
+    case (SE) {
+      return Vec2(1, 1);
+    }
+  }
+}
+
+export Vec2 operator + (Vec2* a, Vec2* b) {
+  return Vec2(a->x + b->x, a->y + b->y);
+}

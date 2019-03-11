@@ -1,0 +1,12 @@
+
+export import "ai_controller.znn";
+export import "player_controller.znn";
+
+import "creature.znn";
+
+export variant Controller {
+  AIController ai;
+  PlayerController player;
+};
+
+export void update(virtual Controller* ctrl, Creature mutable* c);

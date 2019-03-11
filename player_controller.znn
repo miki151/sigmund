@@ -1,0 +1,32 @@
+
+import "libtcod.znn";
+import "creature.znn";
+import "std/print.znn";
+export import "player_input.znn";
+
+export struct PlayerController {
+  PlayerInput* input;
+};
+
+export struct Creature;
+
+export void update(PlayerController* player, Creature mutable* creature) {
+  //print("Updating");
+  switch (player->input->key.vk) {
+    case (TCODK_UP) {
+      creature->walk(Direction::N);
+    }
+    case (TCODK_DOWN) {
+      creature->walk(Direction::S);
+    }
+    case (TCODK_LEFT) {
+      creature->walk(Direction::W);
+    }
+    case (TCODK_RIGHT) {
+      creature->walk(Direction::E);
+    }
+    default {
+    }
+  }
+
+}

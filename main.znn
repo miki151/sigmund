@@ -1,0 +1,32 @@
+
+import "libtcod.znn";
+import "game.znn";
+import "player_input.znn";
+import "map_generator.znn";
+
+int main() {
+  init(80, 50, "Zenon tcod example", false);
+  mutable game = Game(vector<Creature>(), generateMap(80, 50));
+  mutable input = PlayerInput();
+  game.creatures.push_back(Creature(
+      Vec2(20, 20),
+      as_int('@'),
+      TCODColor(255, 255, 255),
+      Controller::player(PlayerController(&input)),
+      &game.map
+  ));
+  while (!is_window_closed()) {
+    get_console()->clear();
+    check_for_event(TCOD_EVENT_KEY_PRESS, &input.key);
+    switch (input.key.vk) {
+      case (TCODK_ESCAPE) {
+        break;
+      }
+      default {}
+    }
+    game.update();
+    game.render(get_console());
+    flush_console();
+  }
+  return 0;
+}

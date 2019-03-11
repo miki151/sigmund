@@ -1,0 +1,22 @@
+
+export import "std/vector.znn";
+export import "map.znn";
+export import "creature.znn";
+
+export struct Game {
+  vector<Creature> creatures;
+  Map map;
+};
+
+export void render(Game* game, TCODConsole mutable* console) {
+  console->clear();
+  game->map.render(console);
+  for (mutable it : game->creatures)
+    it->render(console);
+}
+
+export void update(Game mutable* game) {
+  for (mutable it : game->creatures)
+    it->controller.update(&*it);
+}
+

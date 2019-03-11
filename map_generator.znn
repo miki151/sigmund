@@ -1,0 +1,17 @@
+
+import "map.znn";
+
+export struct Map;
+
+export Map generateMap(int width, int height) {
+  mutable map = Map(width, height);
+  for (mutable i = 0; i < width; ++i) {
+    map.setWall(i, 0);
+    map.setWall(i, height - 1);
+  }
+  for (mutable i = 0; i < height; ++i) {
+    map.setWall(0, i);
+    map.setWall(width - 1, i);
+  }
+  return move(map);
+}

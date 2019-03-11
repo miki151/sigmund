@@ -1,0 +1,26 @@
+
+export import "libtcod.znn";
+export import "controller.znn";
+export import "vec2.znn";
+
+export struct Map;
+import "map.znn";
+
+export struct Creature {
+  Vec2 pos;
+  int ch;
+  TCODColor color;
+  Controller controller;
+  Map* map;
+};
+
+export void render(Creature* creature, TCODConsole mutable* console) {
+  console->set_char(creature->pos.x, creature->pos.y, creature->ch);
+  console->set_char_foreground(creature->pos.x, creature->pos.y, &creature->color);
+}
+
+export void walk(Creature mutable* creature, Direction dir) {
+  const nextPos = creature->pos + Vec2(dir);
+  if (creature->map->tiles[nextPos.x][nextPos.y].canWalk)
+    creature->pos = move(nextPos);
+}

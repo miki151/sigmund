@@ -1,0 +1,10 @@
+
+export import "libtcod.znn";
+
+export struct PlayerInput {
+  TCOD_key_t key;
+};
+
+export PlayerInput() {
+  return PlayerInput(TCOD_key_t());
+}

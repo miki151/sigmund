@@ -1,0 +1,166 @@
+export embed {
+#include <libtcod/libtcod.hpp>
+}
+
+export void init(int width, int height, string title, bool fullscreen) {
+  embed {
+    TCODConsole::initRoot(width, height, title.data(), fullscreen);
+  }
+}
+
+export bool is_window_closed() {
+  embed {
+    return TCODConsole::isWindowClosed();
+  }
+}
+
+export extern enum TCOD_keycode_t {
+  TCODK_NONE,
+  TCODK_ESCAPE,
+  TCODK_BACKSPACE,
+  TCODK_TAB,
+  TCODK_ENTER,
+  TCODK_SHIFT,
+  TCODK_CONTROL,
+  TCODK_ALT,
+  TCODK_PAUSE,
+  TCODK_CAPSLOCK,
+  TCODK_PAGEUP,
+  TCODK_PAGEDOWN,
+  TCODK_END,
+  TCODK_HOME,
+  TCODK_UP,
+  TCODK_LEFT,
+  TCODK_RIGHT,
+  TCODK_DOWN,
+  TCODK_PRINTSCREEN,
+  TCODK_INSERT,
+  TCODK_DELETE,
+  TCODK_LWIN,
+  TCODK_RWIN,
+  TCODK_APPS,
+  TCODK_0,
+  TCODK_1,
+  TCODK_2,
+  TCODK_3,
+  TCODK_4,
+  TCODK_5,
+  TCODK_6,
+  TCODK_7,
+  TCODK_8,
+  TCODK_9,
+  TCODK_KP0,
+  TCODK_KP1,
+  TCODK_KP2,
+  TCODK_KP3,
+  TCODK_KP4,
+  TCODK_KP5,
+  TCODK_KP6,
+  TCODK_KP7,
+  TCODK_KP8,
+  TCODK_KP9,
+  TCODK_KPADD,
+  TCODK_KPSUB,
+  TCODK_KPDIV,
+  TCODK_KPMUL,
+  TCODK_KPDEC,
+  TCODK_KPENTER,
+  TCODK_F1,
+  TCODK_F2,
+  TCODK_F3,
+  TCODK_F4,
+  TCODK_F5,
+  TCODK_F6,
+  TCODK_F7,
+  TCODK_F8,
+  TCODK_F9,
+  TCODK_F10,
+  TCODK_F11,
+  TCODK_F12,
+  TCODK_NUMLOCK,
+  TCODK_SCROLLLOCK,
+  TCODK_SPACE,
+  TCODK_CHAR,
+  TCODK_TEXT
+};
+
+export extern struct TCOD_key_t {
+  TCOD_keycode_t vk;
+  char c;
+};
+
+export extern TCOD_key_t();
+export extern struct TCOD_mouse_t;
+export extern struct TCODConsole;
+
+export void check_for_event(int flags, TCOD_key_t mutable* key) {
+  embed {
+    TCODSystem::checkForEvent(flags, key, NULL);
+  }
+}
+
+export TCODConsole mutable* get_console() {
+  embed {
+    return TCODConsole::root;
+  }
+}
+
+export void clear(TCODConsole mutable* c) {
+  embed {
+    c->clear();
+  }
+}
+
+export void put_char(TCODConsole mutable* console, int x, int y, int c) {
+  embed {
+    console->putChar(x, y, c);
+  }
+}
+
+export void set_char(TCODConsole mutable* console, int x, int y, int c) {
+  embed {
+    console->setChar(x, y, c);
+  }
+}
+
+export void flush_console() {
+  embed {
+    TCODConsole::flush();
+  }
+}
+
+export extern const int TCOD_EVENT_KEY_PRESS;
+
+export extern struct TCODColor {
+  int r;
+  int g;
+  int b;
+};
+
+export extern TCODColor(int, int, int);
+
+export TCODColor copy(TCODColor* c) {
+  embed {
+    return *c;
+  }
+}
+
+export void set_char_foreground(TCODConsole mutable* console, int x, int y, TCODColor* col) {
+  embed {
+    console->setCharForeground(x, y, *col);
+  }
+}
+
+export void set_char_background(TCODConsole mutable* console, int x, int y, TCODColor* col) {
+  embed {
+    console->setCharBackground(x, y, *col);
+  }
+}
+
+export int as_int(char c) {
+  embed {
+    return (int)c;
+  }
+}
+
+

@@ -1,0 +1,11 @@
+
+import "creature.znn";
+
+export struct AIController {
+};
+
+
+export struct Creature;
+
+export void update(AIController*, Creature mutable*) {
+}
