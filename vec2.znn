@@ -38,3 +38,17 @@ export Vec2(Direction dir) {
 export Vec2 operator + (Vec2* a, Vec2* b) {
   return Vec2(a->x + b->x, a->y + b->y);
 }
+
+export Vec2 operator / (Vec2* a, int* b) {
+  return Vec2(a->x / *b, a->y / *b);
+}
+
+export Vec2 operator - (Vec2* a, Vec2* b) {
+  return Vec2(a->x - b->x, a->y - b->y);
+}
+
+export bool operator == (Vec2* a, Vec2* b) {
+  return a->x == b->x && a->y == b->y;
+}
+
+export Vec2 copy(Vec2*) = default;

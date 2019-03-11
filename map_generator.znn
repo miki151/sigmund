@@ -1,17 +1,50 @@
 
 import "map.znn";
+import "std/range.znn";
+import "rectangle.znn";
+import "std/vector.znn";
 
 export struct Map;
 
-export Map generateMap(int width, int height) {
-  mutable map = Map(width, height);
-  for (mutable i = 0; i < width; ++i) {
-    map.setWall(i, 0);
-    map.setWall(i, height - 1);
+enum RoomType {
+  EMPTY
+};
+
+struct RoomGeneration {
+  Rectangle bounds;
+  vector<Vec2> exits;
+  RoomType type;
+};
+
+struct GenerationState {
+  vector<RoomGeneration> rooms;
+};
+
+Tile getWallTile() {
+  return Tile(false, TCODColor(100, 100, 100), as_int('#'));
+}
+
+Tile getCorridorTile() {
+  return Tile(true, TCODColor(20, 20, 20), as_int('.'));
+}
+
+void setWall(Room mutable* room, int x, int y) {
+  room->tiles[x][y] = getWallTile();
+}
+
+void buildRooms(Map mutable* map, GenerationState state) {
+  for (mutable room : state.rooms) {
+    mutable tiles = array_repeat<30>(array_repeat<30>(getWallTile()));
+    for (mutable pos : room->bounds)
+      tiles[pos->x - room->bounds.begin.x][pos->y - room->bounds.begin.y] = getCorridorTile();
+    map->rooms.push_back(Room(room->bounds.copy(), move(tiles)));
   }
-  for (mutable i = 0; i < height; ++i) {
-    map.setWall(0, i);
-    map.setWall(width - 1, i);
-  }
+}
+
+export Map generateMap() {
+  mutable state = GenerationState(vector<RoomGeneration>());
+  state.rooms.push_back(RoomGeneration(Rectangle(Vec2(10, 10), Vec2(30, 30)), vector<Vec2>(), RoomType::EMPTY));
+  mutable map = Map(vector<Room>(), getWallTile());
+  buildRooms(&map, move(state));
   return move(map);
 }

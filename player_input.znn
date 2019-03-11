@@ -1,10 +1,12 @@
 
 export import "libtcod.znn";
+export import "vec2.znn";
 
 export struct PlayerInput {
   TCOD_key_t key;
+  Vec2 position;
 };
 
 export PlayerInput() {
-  return PlayerInput(TCOD_key_t());
+  return PlayerInput(TCOD_key_t(), Vec2(0, 0));
 }

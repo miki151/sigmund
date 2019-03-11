@@ -5,8 +5,9 @@ import "player_input.znn";
 import "map_generator.znn";
 
 int main() {
-  init(80, 50, "Zenon tcod example", false);
-  mutable game = Game(vector<Creature>(), generateMap(80, 50));
+  const screenSize = Vec2(80, 50);
+  init(screenSize.x, screenSize.y, "Zenon tcod example", false);
+  mutable game = Game(vector<Creature>(), generateMap());
   mutable input = PlayerInput();
   game.creatures.push_back(Creature(
       Vec2(20, 20),
@@ -25,7 +26,7 @@ int main() {
       default {}
     }
     game.update();
-    game.render(get_console());
+    game.render(get_console(), input.position.copy(), screenSize.copy());
     flush_console();
   }
   return 0;

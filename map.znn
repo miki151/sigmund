@@ -1,4 +1,6 @@
 export import "libtcod.znn";
+export import "rectangle.znn";
+export import "std/vector.znn";
 
 export struct Tile {
   bool canWalk;
@@ -6,29 +8,30 @@ export struct Tile {
   int ch;
 };
 
-Tile copy(Tile* t) = default;
+export Tile copy(Tile* t) = default;
 
-export struct Map {
-  int width;
-  int height;
-  Tile[100][100] tiles;
+export struct Room {
+  Rectangle bounds;
+  Tile[30][30] tiles;
 };
 
-export Map(int width, int height) {
-  const defaultTile = Tile(true, TCODColor(20, 20, 20), as_int('.'));
-  const row = array_repeat<100>(&defaultTile);
-  return Map(width, height, array_repeat<100>(&row));
-}
+export struct Map {
+  vector<Room> rooms;
+  Tile emptyTile;
+};
 
-export void setWall(Map mutable* map, int x, int y) {
-  map->tiles[x][y] = Tile(false, TCODColor(100, 100, 100), as_int('#'));
-}
-
-export void render(Map* map, TCODConsole mutable* console) {
-  const darkWall = TCODColor(0, 0, 100);
-  const darkGround = TCODColor(50, 50, 150);
-  for (mutable x = 0; x < map->width; ++x)
-    for (mutable y = 0; y < map->height; ++y) {
-      console->set_char_background(x, y, &map->tiles[x][y].color);
+export Tile* getTile(Map* map, Vec2 pos) {
+  for (mutable room : map->rooms)
+    if (room->bounds.contains(&pos)) {
+      const tileCoord = pos - room->bounds.begin;
+      return &room->tiles[tileCoord.x][tileCoord.y];
     }
+  return &map->emptyTile;
+}
+
+export void render(Map* map, TCODConsole mutable* console, Vec2 center, Vec2 screenSize) {
+  for (mutable v : Rectangle(Vec2(0, 0), screenSize.copy())) {
+    const tile = getTile(map, *v + center - screenSize / 2);
+    console->set_char_background(v->x, v->y, &tile->color);
+  }
 }

@@ -14,13 +14,14 @@ export struct Creature {
   Map* map;
 };
 
-export void render(Creature* creature, TCODConsole mutable* console) {
-  console->set_char(creature->pos.x, creature->pos.y, creature->ch);
-  console->set_char_foreground(creature->pos.x, creature->pos.y, &creature->color);
+export void render(Creature* creature, TCODConsole mutable* console, Vec2 center, Vec2 screenSize) {
+  const screenPos = creature->pos - center + screenSize / 2;
+  console->set_char(screenPos.x, screenPos.y, creature->ch);
+  console->set_char_foreground(screenPos.x, screenPos.y, &creature->color);
 }
 
 export void walk(Creature mutable* creature, Direction dir) {
   const nextPos = creature->pos + Vec2(dir);
-  if (creature->map->tiles[nextPos.x][nextPos.y].canWalk)
+  if (creature->map->getTile(nextPos.copy())->canWalk)
     creature->pos = move(nextPos);
 }

@@ -8,11 +8,11 @@ export struct Game {
   Map map;
 };
 
-export void render(Game* game, TCODConsole mutable* console) {
+export void render(Game* game, TCODConsole mutable* console, Vec2 center, Vec2 screenSize) {
   console->clear();
-  game->map.render(console);
+  game->map.render(console, center.copy(), screenSize.copy());
   for (mutable it : game->creatures)
-    it->render(console);
+    it->render(console, center.copy(), screenSize.copy());
 }
 
 export void update(Game mutable* game) {

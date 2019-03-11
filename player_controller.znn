@@ -5,7 +5,7 @@ import "std/print.znn";
 export import "player_input.znn";
 
 export struct PlayerController {
-  PlayerInput* input;
+  PlayerInput mutable* input;
 };
 
 export struct Creature;
@@ -28,5 +28,5 @@ export void update(PlayerController* player, Creature mutable* creature) {
     default {
     }
   }
-
+  player->input->position = creature->pos.copy();
 }
